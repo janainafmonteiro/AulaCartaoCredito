@@ -13,22 +13,23 @@ public class CartaoDeCredito {
         this.nomeTitular = nomeTitular;
         this.cpfTitular = cpfTitular;
         this.limite = limite;
-        this.saldo=0.0f;
+        this.saldo=limite;
     }
     public float consultarSaldo(){
-        return saldo;
+        return this.saldo;
     }
         
     public float consultarLimite(){
-      return limite; 
+      return this.limite; 
     } 
     
-    public boolean realizarTransacao(float valor){
-        if(valor <= limite-saldo){
-            saldo += valor;
-            return true;
-        } 
-        return false;
+    public void realizarTransacao(float valor){
+        if(valor<=this.saldo){
+            this.saldo -= valor;
+            System.out.println("Transação realizada com sucesso");
+        } else{
+            System.out.println("Limite insuficiente");
+        }
             
     }
 }
