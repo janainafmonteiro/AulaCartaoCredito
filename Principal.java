@@ -7,6 +7,7 @@ public class Principal{
     
     public static void main(String[] args){
         Scanner entrada = new Scanner(System.in);
+        Verificador verif = new Verificador();
         System.out.println("Escreva suas informações");
         String numero, nomeTitular, cpfTitular;
         float limite;   
@@ -14,9 +15,19 @@ public class Principal{
         System.out.println("Escreva seu número: ");
         numero = entrada.nextLine();
         System.out.println("Escreva seu nome: ");
-        nomeTitular = entrada.nextLine();
+        do{
+            nomeTitular = entrada.nextLine();
+            if(!verif.validarNome(nomeTitular)){
+                System.out.println("Nome inválido, escreva novamente:");
+            }
+        }while(!verif.validarNome(nomeTitular));
         System.out.println("Escreva seu cpf: ");
-        cpfTitular = entrada.nextLine();
+        do{
+            cpfTitular = entrada.nextLine();
+            if(!verif.validarCpf(cpfTitular)){
+                System.out.println("CPF inválido, escreva novamente:");
+            }
+        }while(!verif.validarCpf(cpfTitular));
         System.out.println("Escreva seu limite: ");
         limite = entrada.nextFloat();
         CartaoDeCredito cartao = new CartaoDeCredito();
