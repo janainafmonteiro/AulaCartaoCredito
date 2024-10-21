@@ -46,7 +46,7 @@ public class CartaoDeCredito {
     public float getSaldo(){
         return this.saldo;
     }   
-     public boolean setSaldo(float valor){
+    public boolean setSaldo(float valor){
         if(valor<=this.saldo){
             this.saldo -= valor;
             return true;
@@ -82,10 +82,9 @@ public class CartaoDeCredito {
         }
             
     }
-    public void aumentarLimite(int contador){
-        if(contador%10==0 && contador!=0){
-            this.limite += 100;
-        }
-            
+    public void aumentarLimite(){
+        this.limite += 100;
+        this.saldo += 100;
+        System.out.println("Parabéns por ser um cliente fiel, seu limite será aumentado!");        
     }
 }

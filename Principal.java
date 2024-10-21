@@ -13,7 +13,7 @@ public class Principal{
         System.out.println("Escreva suas informações");
         String numero, nomeTitular, cpfTitular;
         float limite=0;   
-        int op, contador=0;
+        int op, contador=0, beneficio;
         System.out.println("Escreva seu número: ");
         numero = entrada.nextLine();
         System.out.println("Escreva seu nome: ");
@@ -32,8 +32,8 @@ public class Principal{
         }while(!verif.validarCpf(cpfTitular));       
         do{
             System.out.println("Para que você quer seu cartão?\n1.Cartão com limite menor e poucos beneficios\n2.Cartão com limite maior e muitos beneficios");
-            op = entrada.nextInt();
-            switch(op){
+            beneficio = entrada.nextInt();
+            switch(beneficio){
                 case 1: 
                     limite = aleatorio.nextFloat(50, 2000);                   
                     break;
@@ -69,8 +69,14 @@ public class Principal{
                     contador++;
                 }else{
                     System.out.println("Saldo insuficiente");
+                }               
+                if(contador==10 && beneficio==2){
+                    cartao.aumentarLimite();
+                    contador=0;
+                }else if(contador==15 && beneficio==1){
+                    cartao.aumentarLimite();
+                    contador=0;
                 }
-                
                 break;
             case 2:           
                 System.out.println(cartao.getLimite());
