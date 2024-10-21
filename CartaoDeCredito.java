@@ -46,12 +46,12 @@ public class CartaoDeCredito {
     public float getSaldo(){
         return this.saldo;
     }   
-    public void setSaldo(float valor){
+     public boolean setSaldo(float valor){
         if(valor<=this.saldo){
             this.saldo -= valor;
-            System.out.println("Transação realizada com sucesso");
+            return true;
         }else{
-            System.out.println("Saldo insuficiente");
+            return false;
         }
     }
     public float getLimite(){
@@ -70,7 +70,6 @@ public class CartaoDeCredito {
      public void setCategoriaCompra(String categoria){
         this.nomeCompra.add(categoria);
     }
-
      public void setValorCompra(float valorCompra){
         this.valorCompra.add(valorCompra);
     }
@@ -80,6 +79,12 @@ public class CartaoDeCredito {
             System.out.println("Transação realizada com sucesso");
         } else{
             System.out.println("Limite insuficiente");
+        }
+            
+    }
+    public void aumentarLimite(int contador){
+        if(contador%10==0 && contador!=0){
+            this.limite += 100;
         }
             
     }

@@ -62,10 +62,15 @@ public class Principal{
                 String categoria = entrada.nextLine();
                 System.out.println("Qual valor da transação?");
                 float valor = entrada.nextFloat();
-                cartao.setSaldo(valor);
-                cartao.setValorCompra(valor);
-                cartao.setCategoriaCompra(categoria);
-                contador++;
+                if(cartao.setSaldo(valor)){
+                    System.out.println("Transação realizada com sucesso");
+                    cartao.setValorCompra(valor);
+                    cartao.setCategoriaCompra(categoria);
+                    contador++;
+                }else{
+                    System.out.println("Saldo insuficiente");
+                }
+                
                 break;
             case 2:           
                 System.out.println(cartao.getLimite());
