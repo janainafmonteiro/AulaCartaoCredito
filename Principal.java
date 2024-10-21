@@ -13,7 +13,7 @@ public class Principal{
         System.out.println("Escreva suas informações");
         String numero, nomeTitular, cpfTitular;
         float limite=0;   
-        int op;
+        int op, contador=0;
         System.out.println("Escreva seu número: ");
         numero = entrada.nextLine();
         System.out.println("Escreva seu nome: ");
@@ -35,7 +35,7 @@ public class Principal{
             op = entrada.nextInt();
             switch(op){
                 case 1: 
-                    limite = aleatorio.nextFloat(50, 2000);
+                    limite = aleatorio.nextFloat(50, 2000);                   
                     break;
                 case 2:
                     limite = aleatorio.nextFloat(2000, 10000);
@@ -53,19 +53,28 @@ public class Principal{
         cartao.inicializarSaldo();
        do{
             
-        System.out.println("O que deseja fazer: \n1. Realizar Transação\n2.Consultar Limite\n3.Consultar Saldo");
+        System.out.println("O que deseja fazer: \n1. Realizar Transação\n2.Consultar Limite\n3.Consultar Saldo\n4.Consultar Fatura");
         op = entrada.nextInt();
+        entrada.nextLine();
         switch(op){
             case 1: 
+                System.out.println("Qual nome da compra?");
+                String categoria = entrada.nextLine();
                 System.out.println("Qual valor da transação?");
                 float valor = entrada.nextFloat();
                 cartao.setSaldo(valor);
+                cartao.setValorCompra(valor);
+                cartao.setCategoriaCompra(categoria);
+                contador++;
                 break;
             case 2:           
                 System.out.println(cartao.getLimite());
                 break;
             case 3:               
                 System.out.println(cartao.getSaldo());
+                break;
+            case 4:             
+                cartao.imprimirFatura();
                 break;
             default:
                 System.out.println("Opção inválida!");

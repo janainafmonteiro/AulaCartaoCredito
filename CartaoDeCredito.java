@@ -1,12 +1,17 @@
 
 package IntroducaoPOO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CartaoDeCredito {
     private String numero;
     private String nomeTitular;
     private String cpfTitular;
     private float limite;
     private float saldo;
+    private List<Float> valorCompra = new ArrayList<>();
+    private List<String> nomeCompra = new ArrayList<>();
     
     public CartaoDeCredito(){
     }
@@ -55,7 +60,20 @@ public class CartaoDeCredito {
     public void setLimite(float limite){
       this.limite = limite; 
     } 
-    
+    public void imprimirFatura(){
+        float valorFatura = getLimite()-getSaldo();
+        System.out.println("Sua fatura está em: R$" + valorFatura);
+        for(int i=0; i<valorCompra.size();i++){
+            System.out.println(nomeCompra.get(i) + " = R$" + valorCompra.get(i));
+        }
+    }
+     public void setCategoriaCompra(String categoria){
+        this.nomeCompra.add(categoria);
+    }
+
+     public void setValorCompra(float valorCompra){
+        this.valorCompra.add(valorCompra);
+    }
     public void realizarTransacao(float valor){
         if(valor<=this.saldo){
             this.saldo -= valor;
