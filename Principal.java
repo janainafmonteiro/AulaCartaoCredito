@@ -8,28 +8,23 @@ public class Principal{
     
     public static void main(String[] args){
         Scanner entrada = new Scanner(System.in);
-        Verificador verif = new Verificador();
         Random aleatorio = new Random();
+        
         System.out.println("Escreva suas informações");
+        
         String numero, nomeTitular, cpfTitular;
         float limite=0;   
         int op, contador=0, beneficio;
+        
         System.out.println("Escreva seu número: ");
         numero = entrada.nextLine();
+        
         System.out.println("Escreva seu nome: ");
-        do{
-            nomeTitular = entrada.nextLine();
-            if(!verif.validarNome(nomeTitular)){
-                System.out.println("Nome inválido, escreva novamente:");
-            }
-        }while(!verif.validarNome(nomeTitular));
+        nomeTitular = entrada.nextLine();
+        
         System.out.println("Escreva seu cpf: ");
-        do{
-            cpfTitular = entrada.nextLine();
-            if(!verif.validarCpf(cpfTitular)){
-                System.out.println("CPF inválido, escreva novamente:");
-            }
-        }while(!verif.validarCpf(cpfTitular));       
+        cpfTitular = entrada.nextLine();
+ 
         do{
             System.out.println("Para que você quer seu cartão?\n1.Cartão com limite menor e poucos beneficios\n2.Cartão com limite maior e muitos beneficios");
             beneficio = entrada.nextInt();
@@ -44,7 +39,8 @@ public class Principal{
                     System.out.println("Opção inválida!");
                     break;
             }
-        }while(limite==0);           
+        }while(limite==0);      
+        
         CartaoDeCredito cartao = new CartaoDeCredito();
         cartao.setNumero(numero);
         cartao.setNomeTitular(nomeTitular);
