@@ -13,7 +13,7 @@ public class Principal{
         System.out.println("Escreva suas informações");
         
         String numero, nomeTitular, cpfTitular;
-        float limite=0;   
+        float limite=0, taxaCashback=0, economizado=0;   
         int op, contador=0, beneficio;
         
         System.out.println("Escreva seu número: ");
@@ -34,6 +34,7 @@ public class Principal{
                     break;
                 case 2:
                     limite = aleatorio.nextFloat(2000, 10000);
+                    taxaCashback = 2;
                     break;
                 default:
                     System.out.println("Opção inválida!");
@@ -58,14 +59,44 @@ public class Principal{
                 String categoria = entrada.nextLine();
                 System.out.println("Qual valor da transação?");
                 float valor = entrada.nextFloat();
-                if(cartao.setSaldo(valor)){
-                    System.out.println("Transação realizada com sucesso");
-                    cartao.setValorCompra(valor);
-                    cartao.setCategoriaCompra(categoria);
-                    contador++;
-                }else{
-                    System.out.println("Saldo insuficiente");
-                }               
+                
+                 if(beneficio==2){
+                     System.out.println("Gostaria de cashback de " + taxaCashback + "%?\n1.para não e 2.para sim");
+                    int resposta = entrada.nextInt();
+                    switch(resposta){
+                        case 1 -> {
+                            if(cartao.realizarTransacao(valor)){
+                                System.out.println("Transação realizada com sucesso");
+                                cartao.setValorCompra(valor);
+                                cartao.setCategoriaCompra(categoria);
+                                contador++;
+                            }else{
+                                System.out.println("Saldo insuficiente");
+                            }
+                        }
+                        case 2 -> {
+                            if(cartao.realizarTransacao(valor, taxaCashback)){
+                                economizado += cartao.getCashback();
+                                System.out.println("Transação realizada com sucesso e ganhou R$" + cartao.getCashback() + " de cashback\nTotal economizado até agora: R$" + economizado);
+                                cartao.setValorCompra(valor);
+                                cartao.setCategoriaCompra(categoria);
+                                contador++;
+                            }else{
+                                System.out.println("Saldo insuficiente");
+                            }
+                        }
+                        default -> System.out.println("Opção inválido");
+                        }       
+                 }else{
+                     if(cartao.realizarTransacao(valor)){
+                                System.out.println("Transação realizada com sucesso");
+                                cartao.setValorCompra(valor);
+                                cartao.setCategoriaCompra(categoria);
+                                contador++;
+                            }else{
+                                System.out.println("Saldo insuficiente");
+                            }
+                 }
                 if(contador==10 && beneficio==2){
                     cartao.aumentarLimite();
                     contador=0;
@@ -81,6 +112,9 @@ public class Principal{
                 System.out.println(cartao.getSaldo());
                 break;
             case 4:             
+                if(beneficio==2){
+                    System.out.println("Você possui R$"+ economizado + " de cashback para resgatar");
+                }
                 cartao.imprimirFatura();
                 break;
             default:

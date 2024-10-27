@@ -10,6 +10,8 @@ public class CartaoDeCredito {
     private String cpfTitular;
     private float limite;
     private float saldo;
+    private float taxaCashback;
+    private float cashback=0;
     private List<Float> valorCompra = new ArrayList<>();
     private List<String> nomeCompra = new ArrayList<>();
     
@@ -46,13 +48,8 @@ public class CartaoDeCredito {
     public float getSaldo(){
         return this.saldo;
     }   
-    public boolean setSaldo(float valor){
-        if(valor<=this.saldo){
-            this.saldo -= valor;
-            return true;
-        }else{
-            return false;
-        }
+    public void setSaldo(float saldo){
+       this.saldo = saldo;
     }
     public float getLimite(){
       return this.limite; 
@@ -73,18 +70,34 @@ public class CartaoDeCredito {
      public void setValorCompra(float valorCompra){
         this.valorCompra.add(valorCompra);
     }
-    public void realizarTransacao(float valor){
-        if(valor<=this.saldo){
+
+    public boolean realizarTransacao(float valor){
+         if(valor<=this.saldo){
             this.saldo -= valor;
-            System.out.println("Transação realizada com sucesso");
-        } else{
-            System.out.println("Limite insuficiente");
+            return true;
         }
-            
+         return false;
     }
+    public boolean realizarTransacao(float valor, float taxaCashback){
+         if(valor<=this.saldo){
+            this.saldo -= valor;
+            setCashback((taxaCashback/100)*valor);
+            return true;
+        }
+         return false;
+    }
+ 
     public void aumentarLimite(){
         this.limite += 100;
         this.saldo += 100;
         System.out.println("Parabéns por ser um cliente fiel, seu limite será aumentado!");        
+    }
+
+    public float getCashback() {
+        return cashback;
+    }
+
+    public void setCashback(float cashback) {
+        this.cashback = cashback;
     }
 }
