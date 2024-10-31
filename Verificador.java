@@ -1,6 +1,4 @@
 
-package IntroducaoPOO;
-
 public class Verificador {
     //verificar cpf
     public boolean validarCpf(String cpf){

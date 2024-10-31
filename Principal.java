@@ -1,6 +1,4 @@
 
-package IntroducaoPOO;
-
 import java.util.Random;
 import java.util.Scanner;
 
@@ -12,12 +10,12 @@ public class Principal{
         
         System.out.println("Escreva suas informações");
         
-        String numero, nomeTitular, cpfTitular;
+        String telefone, nomeTitular, cpfTitular;
         float limite=0, taxaCashback=0, economizado=0;   
         int op, contador=0, beneficio;
         
-        System.out.println("Escreva seu número: ");
-        numero = entrada.nextLine();
+        System.out.println("Escreva seu telefone: ");
+        telefone = entrada.nextLine();
         
         System.out.println("Escreva seu nome: ");
         nomeTitular = entrada.nextLine();
@@ -41,11 +39,11 @@ public class Principal{
                     break;
             }
         }while(limite==0);      
-        
+        Cliente cliente = new Cliente();
         CartaoDeCredito cartao = new CartaoDeCredito();
-        cartao.setNumero(numero);
-        cartao.setNomeTitular(nomeTitular);
-        cartao.setCpfTitular(cpfTitular);
+        cliente.setTelefone(telefone);
+        cliente.setNome(nomeTitular);
+        cliente.setCpf(cpfTitular);
         cartao.setLimite(limite);
         cartao.inicializarSaldo();
        do{
