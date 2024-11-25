@@ -1,4 +1,9 @@
 
+package IntroducaoPOO;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -10,18 +15,41 @@ public class Principal{
         
         System.out.println("Escreva suas informações");
         
-        String telefone, nomeTitular, cpfTitular;
+        String nomeTitular, cpfTitular = null, cnpjTitular = null, emailTitular, telefone;
         float limite=0, taxaCashback=0, economizado=0;   
-        int op, contador=0, beneficio;
-        
-        System.out.println("Escreva seu telefone: ");
-        telefone = entrada.nextLine();
+        int op, contador=0, beneficio, numero;
         
         System.out.println("Escreva seu nome: ");
         nomeTitular = entrada.nextLine();
         
-        System.out.println("Escreva seu cpf: ");
-        cpfTitular = entrada.nextLine();
+        System.out.println("Escreva seu número: ");
+        numero = entrada.nextInt();
+        
+        entrada.nextLine();
+        
+        System.out.println("Escreva seu telefone: ");
+        telefone = entrada.nextLine();
+
+        
+        System.out.println("Escreva seu email: ");
+        emailTitular = entrada.nextLine();
+        
+        System.out.println("1 para cpf e 2 para cnpj");
+        op = entrada.nextInt();
+        entrada.nextLine();
+        switch(op){
+            case 1:
+                System.out.println("Escreva seu cpf: ");
+                cpfTitular = entrada.nextLine();
+                break;
+            case 2:
+                System.out.println("Escreva seu cnpj: ");
+                cnpjTitular = entrada.nextLine();
+                break;
+            default:
+                System.out.println("Opção inválida");
+                break;
+        }
  
         do{
             System.out.println("Para que você quer seu cartão?\n1.Cartão com limite menor e poucos beneficios\n2.Cartão com limite maior e muitos beneficios");
@@ -39,13 +67,17 @@ public class Principal{
                     break;
             }
         }while(limite==0);      
+        
+        
         Cliente cliente = new Cliente();
-        CartaoDeCredito cartao = new CartaoDeCredito();
-        cliente.setTelefone(telefone);
+        
         cliente.setNome(nomeTitular);
         cliente.setCpf(cpfTitular);
-        cartao.setLimite(limite);
-        cartao.inicializarSaldo();
+        cliente.setCnpj(cnpjTitular);
+        cliente.setTelefone(telefone);
+        cliente.setEmail(emailTitular);
+        
+        CartaoDeCredito cartao = new CartaoDeCredito(numero, limite, cliente);
        do{
             
         System.out.println("O que deseja fazer: \n1. Realizar Transação\n2.Consultar Limite\n3.Consultar Saldo\n4.Consultar Fatura");
@@ -57,6 +89,9 @@ public class Principal{
                 String categoria = entrada.nextLine();
                 System.out.println("Qual valor da transação?");
                 float valor = entrada.nextFloat();
+                entrada.nextLine();
+                System.out.println("data");
+                String data = entrada.nextLine();
                 
                  if(beneficio==2){
                      System.out.println("Gostaria de cashback de " + taxaCashback + "%?\n1.para não e 2.para sim");
@@ -65,8 +100,6 @@ public class Principal{
                         case 1 -> {
                             if(cartao.realizarTransacao(valor)){
                                 System.out.println("Transação realizada com sucesso");
-                                cartao.setValorCompra(valor);
-                                cartao.setCategoriaCompra(categoria);
                                 contador++;
                             }else{
                                 System.out.println("Saldo insuficiente");
@@ -76,8 +109,6 @@ public class Principal{
                             if(cartao.realizarTransacao(valor, taxaCashback)){
                                 economizado += cartao.getCashback();
                                 System.out.println("Transação realizada com sucesso e ganhou R$" + cartao.getCashback() + " de cashback\nTotal economizado até agora: R$" + economizado);
-                                cartao.setValorCompra(valor);
-                                cartao.setCategoriaCompra(categoria);
                                 contador++;
                             }else{
                                 System.out.println("Saldo insuficiente");
@@ -88,13 +119,12 @@ public class Principal{
                  }else{
                      if(cartao.realizarTransacao(valor)){
                                 System.out.println("Transação realizada com sucesso");
-                                cartao.setValorCompra(valor);
-                                cartao.setCategoriaCompra(categoria);
                                 contador++;
                             }else{
                                 System.out.println("Saldo insuficiente");
                             }
                  }
+                 cartao.setHistorico(data, valor, categoria);
                 if(contador==10 && beneficio==2){
                     cartao.aumentarLimite();
                     contador=0;
@@ -113,7 +143,7 @@ public class Principal{
                 if(beneficio==2){
                     System.out.println("Você possui R$"+ economizado + " de cashback para resgatar");
                 }
-                cartao.imprimirFatura();
+                cartao.getHistorico();
                 break;
             default:
                 System.out.println("Opção inválida!");

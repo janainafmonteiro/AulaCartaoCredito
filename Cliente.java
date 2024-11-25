@@ -1,7 +1,11 @@
+
+package IntroducaoPOO;
+
 public class Cliente {
     private String nome;
     private String cpf;
     private String cnpj;
+    private String email;
     private String telefone;
 
     public String getNome(){
@@ -27,5 +31,13 @@ public class Cliente {
     }
     public void setTelefone(String telefone){
         this.telefone = telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

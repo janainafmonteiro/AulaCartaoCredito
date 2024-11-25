@@ -1,27 +1,39 @@
+package IntroducaoPOO;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CartaoDeCredito {
-    private String numero;
+    private int numero;
     private float limite;
     private float saldo;
+    private Cliente titular;
     private float taxaCashback;
     private float cashback=0;
-    private List<Float> valorCompra = new ArrayList<>();
-    private List<String> nomeCompra = new ArrayList<>();
-    
-    public CartaoDeCredito(){
+    private List<Transacao> historico = new ArrayList<>();
+     public CartaoDeCredito(){
     }
-    public CartaoDeCredito(String numero, float limite){
+    public CartaoDeCredito(int numero, float limite, Cliente titular){
         this.numero = numero;
         this.limite = limite;
         this.saldo=limite;
+        this.titular = titular;
     }
     public void inicializarSaldo(){
         this.saldo= this.limite;
     }
-   
+   public void getHistorico(){
+       float valorFatura = getLimite()-getSaldo();
+        System.out.println("Sua fatura está em: R$" + valorFatura);
+       for(int i = 0; i < historico.size(); i++){
+           System.out.println(historico.get(i).imprimirHistorico(historico.get(i)));
+       }
+   }
+   public void setHistorico(String data, float valor, String descricao){
+       Transacao transacao = new Transacao(data, valor, descricao);
+       historico.add(transacao);
+   }
     public float getSaldo(){
         return this.saldo;
     }   
@@ -34,19 +46,6 @@ public class CartaoDeCredito {
     public void setLimite(float limite){
       this.limite = limite; 
     } 
-    public void imprimirFatura(){
-        float valorFatura = getLimite()-getSaldo();
-        System.out.println("Sua fatura está em: R$" + valorFatura);
-        for(int i=0; i<valorCompra.size();i++){
-            System.out.println(nomeCompra.get(i) + " = R$" + valorCompra.get(i));
-        }
-    }
-     public void setCategoriaCompra(String categoria){
-        this.nomeCompra.add(categoria);
-    }
-     public void setValorCompra(float valorCompra){
-        this.valorCompra.add(valorCompra);
-    }
 
     public boolean realizarTransacao(float valor){
          if(valor<=this.saldo){
@@ -77,4 +76,15 @@ public class CartaoDeCredito {
     public void setCashback(float cashback) {
         this.cashback = cashback;
     }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+
+
 }
